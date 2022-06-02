@@ -32,21 +32,48 @@ Raw_data["content_cutted"] = Raw_data.R.apply(chinese_word_cut)
 print(Raw_data["content_cutted"])
 print(Raw_data.shape)
 
-#停用詞讀取
-stopwords = []
-with open(stopwords_path, 'r', encoding='utf-8') as f:
-    for line in f:
-        if len(line)>0:
-            stopwords.append(line.strip())
-# 停用詞過濾
-def Fliter():
-     for i in range(len()):
-        for j in ():
-            if j in stopwords:
-                ().remove(j)
-            return ()
+# def remove_stop_words(file_name,seg_list):
+#   with open(stopwords_path,'r') as f:
+#     stop_words = f.readlines()
+#   stop_words = [stop_word.rstrip() for stop_word in stop_words]
+#   for seg in seg_list:
+#     if seg not in stop_words:
+#       new_list.append(seg)
+# Raw_data["Filted"] = Raw_data.content_cutted.apply(remove_stop_words)
+# print(Raw_data["content_cutted"])
 
-Raw_data["Filted"] = Raw_data.content_cutted.apply(Filter)
+
+# #停用詞讀取
+with open(stopwords_path,'r',encoding='utf-8-sig') as f:
+    stop_words = f.readlines()
+    stop_words = [stop_word.rstrip() for stop_word in stop_words]
+new_list = []
+# print(stop_words)
+# print(type(stop_words))
+
+# 停用詞處理
+def stopword_filter(words):
+    for seg in (words):
+        if seg not in stop_words:
+            new_list.append(seg)
+    return new_list
+
+Raw_data["Filted"] = Raw_data.content_cutted.apply(stopword_filter)
+print(Raw_data["Filted"])
+
+
+
+# stopwords = []
+# with open(stopwords_path, 'r', encoding='utf-8') as f:
+#     for line in f:
+#         if len(line)>0:
+#             stopwords.append(line.strip())
+
+
+  
+
+# Raw_data["Filted"] = Raw_data.content_cutted.apply(stopword_filter)
+# print(Raw_data["content_cutted"])
 
 # # print(stopwords)
 # def tokenizer(s):
