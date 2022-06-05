@@ -7,7 +7,7 @@ import pandas as pd
 
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.decomposition import LatentDirichletAllocation
-
+from sklearn.feature_extraction.text import TfidfTransformer
 import pyLDAvis
 import pyLDAvis.sklearn
 import csv
@@ -24,13 +24,11 @@ jieba.load_userdict(dicts)
 
 #斷詞函數          
 def chinese_word_cut(mytext):
-    return jieba.lcut(mytext)
-
+   return jieba.lcut(mytext)
 #斷詞
 Raw_data["content_cutted"] = Raw_data.R.apply(chinese_word_cut)
 cleared = pd.Series(index = range(0,819))
-# print(Raw_data["content_cutted"])
-# print(Raw_data.shape)
+
 
 
 # #停用詞讀取
@@ -56,20 +54,26 @@ def stopword_filter(words):
 Filted = []
 for j in range(0,818):
     Filted.append(stopword_filter(Raw_data.loc[j:j,"content_cutted"]))
-    
-Target_Data = pd.DataFrame({"Filted":Filted})
-# Processed_Data = pd.concat([Raw_data,Filted3],axis=1,sort=False)
 
+def FML(mytxt):
+    return " ".join(mytxt)
+FML_list = []
+
+for k in Filted:
+    FML_list.append(FML(k))
+123  
+
+Target_Data = pd.DataFrame({"FML":FML_list})
 
 #向量化
-n_features = 10
+n_features = 1000
 tf_vectorizer = CountVectorizer(strip_accents = 'unicode',
 max_features=n_features,
 stop_words='english',
-max_df = 1,
-min_df = 1
+max_df = 818,
+min_df = 0.01
 )
-tf = tf_vectorizer.fit_transform(Target_Data)
+tf = tf_vectorizer.fit_transform(Target_Data.FML)
 
 #主題抽取
 lda = LatentDirichletAllocation(
