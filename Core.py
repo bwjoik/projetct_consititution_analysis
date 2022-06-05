@@ -7,13 +7,13 @@ import pandas as pd
 
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.decomposition import LatentDirichletAllocation
-from sklearn.feature_extraction.text import TfidfTransformer
+
 import pyLDAvis
 import pyLDAvis.sklearn
 import csv
 
 
-# print(Raw_data.head())
+
 
 #詞庫引入
 dicts = "C:/Users/user/OneDrive - 東吳大學/python/projetct_consititution_analysis/text/法律中文分字字庫.txt"
@@ -37,8 +37,11 @@ with open(stopwords_path,'r',encoding='utf-8-sig') as f:
     stop_words = [stop_word.rstrip() for stop_word in stop_words] #讀取後不知道為什麼詞後面回有一個空格，移除掉
 stop_words.append('\n')
 stop_words.append('\n\n')
-
-
+stop_words.append('\n\n\n')
+stop_words.append('\n\n\n\n\n')
+stop_words.append('\n\n\n\n\n\n')
+stop_words.append('\n\n\n\n\n\n')
+stop_words.append('\n\n\n\n\n\n\n')
 
 
 # 停用詞過濾
@@ -61,17 +64,17 @@ FML_list = []
 
 for k in Filted:
     FML_list.append(FML(k))
-123  
+
 
 Target_Data = pd.DataFrame({"FML":FML_list})
 
 #向量化
-n_features = 1000
+n_features = 5000
 tf_vectorizer = CountVectorizer(strip_accents = 'unicode',
 max_features=n_features,
 stop_words='english',
-max_df = 818,
-min_df = 0.01
+max_df = 0.90,
+min_df = 1
 )
 tf = tf_vectorizer.fit_transform(Target_Data.FML)
 
