@@ -1,0 +1,16 @@
+Sub find_cha()
+    Dim myRng As Range, allRng As Range, i As Long
+    Dim firstAddress As String
+    
+    Set allRng = Application.Intersect(Range("A:A"), Cells.Parent.UsedRange)
+    Set myRng = allRng.Find(what:="甲", LookAt:=xlPart)
+    If myRng Is Nothing Then Exit Sub
+    
+    firstAddress = myRng.Address
+    i = 0
+    Do
+        i = i + 1
+        Cells(i, "C") = myRng.Value
+        Set myRng = allRng.FindNext(myRng)
+    Loop Until myRng.Address = firstAddress
+End Sub
